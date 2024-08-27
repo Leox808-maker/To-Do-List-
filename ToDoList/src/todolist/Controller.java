@@ -174,3 +174,19 @@ public void aggiungiAttività() {
             creaAttività(attività); 
         }
     }
+    
+ public void gestisciAttività(Label descrizioneAttività, Button pulsanteStato, boolean èAttiva) {
+
+        if(!èAttiva) {
+            descrizioneAttività.getStyleClass().add("barrato");
+            pulsanteStato.getStyleClass().clear();
+            pulsanteStato.getStyleClass().add("nonCompletata");
+        } else {
+            descrizioneAttività.getStyleClass().remove("barrato"); 
+            pulsanteStato.getStyleClass().clear();
+            pulsanteStato.getStyleClass().add("pulsanteCompletata");
+        }
+
+    }
+
+}
