@@ -80,3 +80,97 @@ public class Gestore {
         });
 
     }
+    
+public void aggiungiAttività() {
+
+        String descrizioneAttività = campoInserimentoAttività.getText(); 
+        Attività nuovaAttività = new Attività(descrizioneAttività);
+        elencoAttività.add(nuovaAttività); 
+        nonCompletate.add(nuovaAttività); 
+        campoInserimentoAttività.setText(""); 
+        System.out.println("Hai aggiunto un'attività: " + nuovaAttività.getDescrizione()); 
+
+        creaAttività(nuovaAttività);
+
+
+    }
+
+
+    private void eliminaAttività(Attività attività, BorderPane contenitoreAttività) {
+        elencoAttività.remove(attività); 
+        if(attività.èCompletata()) { 
+            completate.remove(attività);
+        } else {
+            nonCompletate.remove(attività);
+        }
+
+        visualizzazioneAttività.getItems().remove(contenitoreAttività); 
+        System.out.println("Hai rimosso un'attività: " + attività.getDescrizione());
+    }
+
+
+    private void creaAttività(Attività nuovaAttività) {
+        Label etichettaAttività = new Label(nuovaAttività.getDescrizione());
+        etichettaAttività.setAlignment(Pos.BASELINE_LEFT);
+
+        Button pulsanteElimina = new Button();
+        pulsanteElimina.getStyleClass().add("pulsanteElimina"); 
+
+        Button pulsanteCompletata = new Button();
+        pulsanteCompletata.getStyleClass().add("pulsanteCompletata");
+        gestisciAttività(etichettaAttività, pulsanteCompletata, !nuovaAttività.èCompletata()); 
+
+        HBox contenitorePulsanti = new HBox(); 
+        contenitorePulsanti.getChildren().addAll(pulsanteCompletata, pulsanteElimina); 
+
+        BorderPane contenitoreAttività = new BorderPane();
+        contenitoreAttività.setLeft(etichettaAttività); 
+        contenitoreAttività.setRight(contenitorePulsanti); 
+
+        visualizzazioneAttività.getItems().add(contenitoreAttività);
+
+
+        pulsanteElimina.setOnAction(new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent eventoAzione) {
+                eliminaAttività(nuovaAttività, contenitoreAttività);
+            }
+        });
+        pulsanteCompletata.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent eventoAzione) {
+                if(nuovaAttività.èCompletata()) { 
+                    gestisciAttività(etichettaAttività, pulsanteCompletata, true); 
+                    completate.remove(nuovaAttività);
+                    nonCompletate.add(nuovaAttività); 
+                } else { 
+                    gestisciAttività(etichettaAttività, pulsanteCompletata, false); 
+                    completate.add(nuovaAttività); 
+                    nonCompletate.remove(nuovaAttività); 
+                }
+                nuovaAttività.setCompletata(!(nuovaAttività.èCompletata())); 
+            }
+        });
+
+    }
+
+
+    public void salvaAttività() {
+        try(ObjectOutputStream fileAttività = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("src/sample/Assets/Data/fileAttività.dat")))){
+            for (Attività attività : elencoAttività) {
+                fileAttività.writeObject(attività);
+                System.out.println("Attività salvata: " + attività.getDescrizione());
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void popolaElenco(List<Attività> elenco) { 
+        visualizzazioneAttività.getItems().clear();
+        visualizzazioneAttività.refresh(); 
+        for (Attività attività : elenco) {
+            creaAttività(attività); 
+        }
+    }
