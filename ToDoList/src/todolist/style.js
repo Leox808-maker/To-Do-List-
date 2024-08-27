@@ -54,3 +54,31 @@
     -fx-min-height: 45px;
     -fx-border-radius: 10px;
 }
+
+#pulsanteAggiungi:pressed {
+    -fx-min-width: 65px;
+    -fx-min-height: 40px;
+    -fx-padding: 5px;
+}
+
+#pulsanteSalva {
+    -fx-background-image: url("Assets/Images/save.jpg");
+    -fx-background-size: 100% 100%;
+    -fx-background-position: center;
+    -fx-min-width: 70px;
+    -fx-min-height: 45px;
+}
+#pulsanteSalva:pressed {
+    -fx-min-width: 65px;
+    -fx-min-height: 40px;
+    -fx-padding: 5px;
+}
+
+#campoInserimento {
+    -fx-min-height: 44px;
+    -fx-font-size: 25;
+}
+
+.bottoneFiltro {
+    -fx-padding: 10px;
+}
