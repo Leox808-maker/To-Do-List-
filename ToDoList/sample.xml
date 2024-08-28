@@ -48,3 +48,21 @@
             <ListView fx:id="visualizzazioneAttività" GridPane.columnIndex="1"/>
         </GridPane>
     </center>
+    
+        <bottom>
+        <GridPane alignment="CENTER">
+            <fx:define>
+                <ToggleGroup fx:id="gruppiFiltri"/>
+            </fx:define>
+            <HBox>
+                <RadioButton styleClass="bottoneFiltro" text="Tutte" toggleGroup="$gruppiFiltri" fx:id="filtroTutti" selected="true"/>
+                <RadioButton styleClass="bottoneFiltro" text="Completate" toggleGroup="$gruppiFiltri" fx:id="filtroCompletate"/>
+                <RadioButton styleClass="bottoneFiltro" text="Non completate" toggleGroup="$gruppiFiltri" fx:id="filtroNonCompletate"/>
+            </HBox>
+        </GridPane>
+    </bottom>
+
+    <stylesheets>
+        <URL value="@stili.css"/>
+    </stylesheets>
+</BorderPane>
